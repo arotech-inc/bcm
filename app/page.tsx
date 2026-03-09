@@ -2,12 +2,21 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { useState, useEffect } from "react";
 
 export default function BcmHome() {
   const fadeUp = {
     hidden: { opacity: 0, y: 30 },
     show: { opacity: 1, y: 0, transition: { duration: 0.6 } }
   };
+
+  const [activeImg, setActiveImg] = useState(0);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveImg(prev => prev === 0 ? 1 : 0);
+    }, 2500);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <main className="bg-slate-950 text-slate-300 min-h-screen selection:bg-amber-500 selection:text-slate-950">
@@ -118,8 +127,20 @@ export default function BcmHome() {
       <section id="features" className="py-24 px-6 bg-slate-950">
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center">
           <div className="order-2 md:order-1 grid grid-cols-2 gap-4">
-            <div className="h-48 bg-slate-800 rounded-sm border border-slate-700 relative overflow-hidden"><Image src="/bcm-feat1.jpg" alt="Scouting" fill className="object-cover opacity-60 hover:opacity-100 transition-opacity" /></div>
-            <div className="h-48 bg-slate-800 rounded-sm border border-slate-700 relative overflow-hidden mt-8"><Image src="/bcm-feat2.jpg" alt="Finances" fill className="object-cover opacity-60 hover:opacity-100 transition-opacity" /></div>
+            <motion.div
+              className="h-80 bg-slate-800 rounded-sm border border-slate-700 relative overflow-hidden"
+              animate={{ scale: activeImg === 0 ? 1.1 : 1, borderColor: activeImg === 0 ? "rgb(245,158,11)" : "rgb(51,65,85)" }}
+              transition={{ duration: 0.7, ease: "easeInOut" }}
+            >
+              <Image src="/bcm-feat1.jpg" alt="Scouting" fill className="object-cover opacity-70 transition-opacity" />
+            </motion.div>
+            <motion.div
+              className="h-80 bg-slate-800 rounded-sm border border-slate-700 relative overflow-hidden mt-10"
+              animate={{ scale: activeImg === 1 ? 1.1 : 1, borderColor: activeImg === 1 ? "rgb(245,158,11)" : "rgb(51,65,85)" }}
+              transition={{ duration: 0.7, ease: "easeInOut" }}
+            >
+              <Image src="/bcm-feat2.jpg" alt="Finances" fill className="object-cover opacity-70 transition-opacity" />
+            </motion.div>
           </div>
           <div className="order-1 md:order-2">
             <h2 className="text-4xl font-bold text-white mb-8">Deep Management</h2>
@@ -144,22 +165,23 @@ export default function BcmHome() {
       {/* ================= SCREENSHOTS ================= */}
       <section className="py-24 px-2 bg-slate-900 overflow-hidden">
         <h2 className="text-3xl font-bold text-center text-white mb-12">In-Game Interface</h2>
-        <div className="flex gap-4 overflow-x-auto pb-8 snap-x pl-4 md:justify-center">
-          {["/bcm1.png", "/bcm2.png", "/bcm3.png", "/bcm4.png"].map((src, i) => (
-            <div key={i} className="min-w-[300px] md:min-w-[400px] h-64 bg-slate-800 rounded-sm snap-center border border-slate-700 relative group overflow-hidden cursor-pointer">
-              <div className="absolute inset-0 bg-amber-500/0 group-hover:bg-amber-500/30 transition-all z-20 flex items-center justify-center pointer-events-none">
-                <span className="text-white opacity-0 group-hover:opacity-100 font-bold tracking-widest drop-shadow-lg">VIEW</span>
+        <div className="relative overflow-hidden">
+          <div className="flex gap-4 pb-8 animate-scroll">
+            {["/bcm1.png", "/bcm2.png", "/bcm3.png", "/bcm4.png", "/bcm1.png", "/bcm2.png", "/bcm3.png", "/bcm4.png"].map((src, i) => (
+              <div key={i} className="min-w-[300px] md:min-w-[400px] h-64 bg-slate-800 rounded-sm border border-slate-700 relative group overflow-hidden cursor-pointer flex-shrink-0">
+                <div className="absolute inset-0 bg-amber-500/0 group-hover:bg-amber-500/30 transition-all z-20 flex items-center justify-center pointer-events-none">
+                  <span className="text-white opacity-0 group-hover:opacity-100 font-bold tracking-widest drop-shadow-lg">VIEW</span>
+                </div>
+                
+                <Image 
+                  src={src} 
+                  alt={`BCM Screenshot ${i + 1}`} 
+                  fill 
+                  className="object-cover opacity-70 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500 z-10" 
+                />
               </div>
-              
-              <Image 
-                src={src} 
-                alt={`BCM Screenshot ${i + 1}`} 
-                fill 
-                className="object-cover opacity-70 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500 z-10" 
-              />
-            </div>
-          ))}
-
+            ))}
+          </div>
         </div>
       </section>
 
