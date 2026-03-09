@@ -70,7 +70,7 @@ export default function BcmHome() {
     el.style.transform = `translateX(-${posRef.current}px)`;
   };
 
-  const screenshots = ["/bcm1.png", "/bcm2.png", "/bcm3.png", "/bcm4.png", "/bcm5.png"];
+  const screenshots = ["/bcm1.png", "/bcm2.png", "/bcm3.png", "/bcm4.png", "/bcm5.jpg"];
   const scrollImgs = [...screenshots, ...screenshots];
 
   /* 확대 대상 결정 */
@@ -196,43 +196,56 @@ export default function BcmHome() {
       </section>
 
       {/* ================= MANAGEMENT FEATURES ================= */}
-      <section id="features" className="py-24 px-2 bg-slate-950">
-        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-8 items-center">
-          <div className="order-2 md:order-1 grid grid-cols-2 gap-5">
+      <section id="features" className="py-24 bg-slate-950">
+        <div className="grid md:grid-cols-2 items-center">
+          {/* 이미지 컬럼 - 여백 없이 full width */}
+          <div className="order-2 md:order-1 flex flex-col gap-4">
             {/* 이미지 1 */}
-            <motion.div
-              className="h-[26rem] bg-slate-800 rounded-sm border relative overflow-hidden cursor-pointer"
-              animate={{
-                scale: expandedImg === 0 ? 1.08 : 0.97,
-                borderColor: expandedImg === 0 ? "rgb(245,158,11)" : "rgb(51,65,85)"
+            <div
+              className="relative w-full overflow-hidden cursor-pointer border-y transition-colors duration-700"
+              style={{
+                aspectRatio: "16/7",
+                borderColor: expandedImg === 0 ? "rgb(245,158,11)" : "transparent"
               }}
-              transition={{ duration: 0.8, ease: "easeInOut" }}
               onMouseEnter={() => handleDmEnter(0)}
               onMouseLeave={handleDmLeave}
             >
-              <Image src="/bcm-feat1.jpg" alt="Scouting" fill className="object-cover opacity-80" />
+              <motion.div
+                className="absolute inset-0"
+                animate={{ scale: expandedImg === 0 ? 1.07 : 1 }}
+                transition={{ duration: 0.8, ease: "easeInOut" }}
+              >
+                <Image src="/bcm-feat1.jpg" alt="Scouting" fill className="object-cover opacity-80" />
+              </motion.div>
               {expandedImg === 0 && (
-                <div className="absolute inset-0 ring-2 ring-amber-500/60 ring-inset pointer-events-none" />
+                <div className="absolute inset-0 ring-2 ring-amber-500/50 ring-inset pointer-events-none z-10" />
               )}
-            </motion.div>
+            </div>
             {/* 이미지 2 */}
-            <motion.div
-              className="h-[26rem] bg-slate-800 rounded-sm border relative overflow-hidden cursor-pointer mt-12"
-              animate={{
-                scale: expandedImg === 1 ? 1.08 : 0.97,
-                borderColor: expandedImg === 1 ? "rgb(245,158,11)" : "rgb(51,65,85)"
+            <div
+              className="relative w-full overflow-hidden cursor-pointer border-y transition-colors duration-700"
+              style={{
+                aspectRatio: "16/7",
+                borderColor: expandedImg === 1 ? "rgb(245,158,11)" : "transparent"
               }}
-              transition={{ duration: 0.8, ease: "easeInOut" }}
               onMouseEnter={() => handleDmEnter(1)}
               onMouseLeave={handleDmLeave}
             >
-              <Image src="/bcm-feat2.jpg" alt="Finances" fill className="object-cover opacity-80" />
+              <motion.div
+                className="absolute inset-0"
+                animate={{ scale: expandedImg === 1 ? 1.07 : 1 }}
+                transition={{ duration: 0.8, ease: "easeInOut" }}
+              >
+                <Image src="/bcm-feat2.jpg" alt="Finances" fill className="object-cover opacity-80" />
+              </motion.div>
               {expandedImg === 1 && (
-                <div className="absolute inset-0 ring-2 ring-amber-500/60 ring-inset pointer-events-none" />
+                <div className="absolute inset-0 ring-2 ring-amber-500/50 ring-inset pointer-events-none z-10" />
               )}
-            </motion.div>
+            </div>
           </div>
-          <div className="order-1 md:order-2 pl-2">
+
+          {/* 텍스트 컬럼 */}
+          <div className="order-1 md:order-2 px-10 md:px-16 py-12 md:py-0">
             <h2 className="text-4xl font-bold text-white mb-8">Deep Management</h2>
             <div className="space-y-8">
               <div>
