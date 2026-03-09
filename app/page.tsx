@@ -167,7 +167,7 @@ export default function BcmHome() {
         <h2 className="text-3xl font-bold text-center text-white mb-12">In-Game Interface</h2>
         <div className="relative overflow-hidden">
           <div className="flex gap-4 pb-8 animate-scroll">
-            {["/bcm1.png", "/bcm2.png", "/bcm3.png", "/bcm4.png", "/bcm1.png", "/bcm2.png", "/bcm3.png", "/bcm4.png"].map((src, i) => (
+            {["/bcm1.png", "/bcm2.png", "/bcm3.png", "/bcm4.png", "/bcm1.png", "/bcm2.png", "/bcm3.png", "/bcm4.png","/bcm5.png"].map((src, i) => (
               <div key={i} className="min-w-[300px] md:min-w-[400px] h-64 bg-slate-800 rounded-sm border border-slate-700 relative group overflow-hidden cursor-pointer flex-shrink-0">
                 <div className="absolute inset-0 bg-amber-500/0 group-hover:bg-amber-500/30 transition-all z-20 flex items-center justify-center pointer-events-none">
                   <span className="text-white opacity-0 group-hover:opacity-100 font-bold tracking-widest drop-shadow-lg">VIEW</span>
