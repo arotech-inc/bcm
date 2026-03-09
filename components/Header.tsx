@@ -24,7 +24,7 @@ export default function BcmHeader() {
             BCM
           </span>
           <span className="hidden md:block text-xs text-slate-400 font-mono tracking-widest mt-2">
-            BASEBALL CLUB MANAGEMENT
+            BASEBALL CLUB MANAGER
           </span>
         </Link>
 
