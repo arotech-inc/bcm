@@ -29,7 +29,7 @@ export default function BcmHome() {
               Build Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-amber-600">Dynasty</span>
             </h1>
             <p className="text-lg md:text-2xl text-slate-400 mb-10 max-w-2xl mx-auto font-light">
-              통계와 직관의 완벽한 조화. 감독이자 단장이 되어 구단의 모든 것을 통제하십시오.
+              통계와 직관의 완벽한 조화. 나만의 완벽한 구단을 설계하십시오.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button className="bg-amber-500 hover:bg-amber-400 text-slate-950 px-8 py-4 font-bold text-lg rounded-sm transition-all shadow-[0_0_20px_rgba(245,158,11,0.4)] hover:shadow-[0_0_30px_rgba(245,158,11,0.6)]">
@@ -145,15 +145,21 @@ export default function BcmHome() {
       <section className="py-24 px-2 bg-slate-900 overflow-hidden">
         <h2 className="text-3xl font-bold text-center text-white mb-12">In-Game Interface</h2>
         <div className="flex gap-4 overflow-x-auto pb-8 snap-x pl-4 md:justify-center">
-          {[1, 2, 3, 4].map((item) => (
-            <div key={item} className="min-w-[300px] md:min-w-[400px] h-64 bg-slate-800 rounded-sm snap-center border border-slate-700 relative group overflow-hidden cursor-pointer">
-              <div className="absolute inset-0 bg-amber-500/0 group-hover:bg-amber-500/20 transition-all z-10 flex items-center justify-center">
-                <span className="text-white opacity-0 group-hover:opacity-100 font-bold tracking-widest">VIEW</span>
+          {["/bcm1.png", "/bcm2.png", "/bcm3.png", "/bcm4.png"].map((src, i) => (
+            <div key={i} className="min-w-[300px] md:min-w-[400px] h-64 bg-slate-800 rounded-sm snap-center border border-slate-700 relative group overflow-hidden cursor-pointer">
+              <div className="absolute inset-0 bg-amber-500/0 group-hover:bg-amber-500/30 transition-all z-20 flex items-center justify-center pointer-events-none">
+                <span className="text-white opacity-0 group-hover:opacity-100 font-bold tracking-widest drop-shadow-lg">VIEW</span>
               </div>
-              {/* 이미지 연출을 위한 플레이스홀더 */}
-              <div className="w-full h-full flex items-center justify-center font-mono text-slate-600">SCREENSHOT {item}</div>
+              
+              <Image 
+                src={src} 
+                alt={`BCM Screenshot ${i + 1}`} 
+                fill 
+                className="object-cover opacity-70 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500 z-10" 
+              />
             </div>
           ))}
+
         </div>
       </section>
 
