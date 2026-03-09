@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 
 export default function BcmHome() {
   const fadeUp = {
@@ -10,27 +10,100 @@ export default function BcmHome() {
     show: { opacity: 1, y: 0, transition: { duration: 0.6 } }
   };
 
+  /* ── Deep Management ── */
   const [activeImg, setActiveImg] = useState(0);
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveImg(prev => prev === 0 ? 1 : 0);
-    }, 2500);
-    return () => clearInterval(interval);
+  const [hoveredImg, setHoveredImg] = useState<number | null>(null);
+  const dmIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const startDmInterval = useCallback(() => {
+    dmIntervalRef.current = setInterval(() => {
+      setActiveImg(prev => (prev === 0 ? 1 : 0));
+    }, 8000);
   }, []);
+
+  useEffect(() => {
+    startDmInterval();
+    return () => { if (dmIntervalRef.current) clearInterval(dmIntervalRef.current); };
+  }, [startDmInterval]);
+
+  const handleDmEnter = (idx: number) => {
+    setHoveredImg(idx);
+    if (dmIntervalRef.current) clearInterval(dmIntervalRef.current);
+  };
+  const handleDmLeave = () => {
+    setHoveredImg(null);
+    startDmInterval();
+  };
+
+  /* ── In-Game Interface ── */
+  const [lightboxSrc, setLightboxSrc] = useState<string | null>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const posRef = useRef(0);
+  const isPausedRef = useRef(false);
+  const rafRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const speed = 0.5;
+    const animate = () => {
+      if (!isPausedRef.current && el) {
+        posRef.current += speed;
+        const half = el.scrollWidth / 2;
+        if (posRef.current >= half) posRef.current = 0;
+        el.style.transform = `translateX(-${posRef.current}px)`;
+      }
+      rafRef.current = requestAnimationFrame(animate);
+    };
+    rafRef.current = requestAnimationFrame(animate);
+    return () => { if (rafRef.current) cancelAnimationFrame(rafRef.current); };
+  }, []);
+
+  const handleArrow = (dir: "left" | "right") => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const step = 440;
+    const half = el.scrollWidth / 2;
+    posRef.current = dir === "right"
+      ? Math.min(posRef.current + step, half - 1)
+      : Math.max(posRef.current - step, 0);
+    el.style.transform = `translateX(-${posRef.current}px)`;
+  };
+
+  const screenshots = ["/bcm1.png", "/bcm2.png", "/bcm3.png", "/bcm4.png", "/bcm5.png"];
+  const scrollImgs = [...screenshots, ...screenshots];
+
+  /* 확대 대상 결정 */
+  const expandedImg = hoveredImg !== null ? hoveredImg : activeImg;
 
   return (
     <main className="bg-slate-950 text-slate-300 min-h-screen selection:bg-amber-500 selection:text-slate-950">
-      
+
+      {/* ================= LIGHTBOX ================= */}
+      {lightboxSrc && (
+        <div
+          className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4"
+          onClick={() => setLightboxSrc(null)}
+        >
+          <button
+            className="absolute top-4 right-6 text-white text-3xl font-bold hover:text-amber-400 transition-colors"
+            onClick={() => setLightboxSrc(null)}
+          >
+            ✕
+          </button>
+          <div className="relative max-w-5xl w-full max-h-[90vh] aspect-video" onClick={e => e.stopPropagation()}>
+            <Image src={lightboxSrc} alt="Preview" fill className="object-contain" />
+          </div>
+        </div>
+      )}
+
       {/* ================= HERO ================= */}
       <section className="relative h-screen w-full flex items-center justify-center overflow-hidden border-b border-amber-900/30">
-        {/* 경기 장면 영상 배경 */}
         <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover opacity-40 mix-blend-luminosity">
           <source src="/bcm-hero.mp4" type="video/mp4" />
         </video>
-        {/* 네이비 오버레이 & 데이터 패턴 */}
         <div className="absolute inset-0 bg-slate-950/70" />
         <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-10" />
-
         <div className="relative z-10 text-center px-6 mt-16 max-w-5xl mx-auto">
           <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8 }}>
             <p className="text-amber-400 font-mono tracking-[0.3em] mb-4 text-sm md:text-base">DATA-DRIVEN BASEBALL SIMULATION</p>
@@ -80,7 +153,6 @@ export default function BcmHome() {
           <p className="text-slate-400 max-w-2xl mx-auto">타구 속도, 발사각, 구장 팩터까지 계산하는 차세대 시뮬레이션 알고리즘</p>
         </div>
         <div className="max-w-4xl mx-auto bg-slate-900 border border-slate-800 rounded-sm p-8 shadow-2xl relative z-10">
-          {/* 가상의 데이터 대시보드 UI 연출 */}
           <div className="flex justify-between items-center mb-8 border-b border-slate-800 pb-4">
             <span className="font-mono text-amber-500">LIVE ENGINE STATUS</span>
             <span className="flex items-center gap-2 text-xs font-mono"><span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span> PROCESSING</span>
@@ -124,25 +196,43 @@ export default function BcmHome() {
       </section>
 
       {/* ================= MANAGEMENT FEATURES ================= */}
-      <section id="features" className="py-24 px-6 bg-slate-950">
-        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-          <div className="order-2 md:order-1 grid grid-cols-2 gap-4">
+      <section id="features" className="py-24 px-2 bg-slate-950">
+        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-8 items-center">
+          <div className="order-2 md:order-1 grid grid-cols-2 gap-5">
+            {/* 이미지 1 */}
             <motion.div
-              className="h-80 bg-slate-800 rounded-sm border border-slate-700 relative overflow-hidden"
-              animate={{ scale: activeImg === 0 ? 1.1 : 1, borderColor: activeImg === 0 ? "rgb(245,158,11)" : "rgb(51,65,85)" }}
-              transition={{ duration: 0.7, ease: "easeInOut" }}
+              className="h-[26rem] bg-slate-800 rounded-sm border relative overflow-hidden cursor-pointer"
+              animate={{
+                scale: expandedImg === 0 ? 1.08 : 0.97,
+                borderColor: expandedImg === 0 ? "rgb(245,158,11)" : "rgb(51,65,85)"
+              }}
+              transition={{ duration: 0.8, ease: "easeInOut" }}
+              onMouseEnter={() => handleDmEnter(0)}
+              onMouseLeave={handleDmLeave}
             >
-              <Image src="/bcm-feat1.jpg" alt="Scouting" fill className="object-cover opacity-70 transition-opacity" />
+              <Image src="/bcm-feat1.jpg" alt="Scouting" fill className="object-cover opacity-80" />
+              {expandedImg === 0 && (
+                <div className="absolute inset-0 ring-2 ring-amber-500/60 ring-inset pointer-events-none" />
+              )}
             </motion.div>
+            {/* 이미지 2 */}
             <motion.div
-              className="h-80 bg-slate-800 rounded-sm border border-slate-700 relative overflow-hidden mt-10"
-              animate={{ scale: activeImg === 1 ? 1.1 : 1, borderColor: activeImg === 1 ? "rgb(245,158,11)" : "rgb(51,65,85)" }}
-              transition={{ duration: 0.7, ease: "easeInOut" }}
+              className="h-[26rem] bg-slate-800 rounded-sm border relative overflow-hidden cursor-pointer mt-12"
+              animate={{
+                scale: expandedImg === 1 ? 1.08 : 0.97,
+                borderColor: expandedImg === 1 ? "rgb(245,158,11)" : "rgb(51,65,85)"
+              }}
+              transition={{ duration: 0.8, ease: "easeInOut" }}
+              onMouseEnter={() => handleDmEnter(1)}
+              onMouseLeave={handleDmLeave}
             >
-              <Image src="/bcm-feat2.jpg" alt="Finances" fill className="object-cover opacity-70 transition-opacity" />
+              <Image src="/bcm-feat2.jpg" alt="Finances" fill className="object-cover opacity-80" />
+              {expandedImg === 1 && (
+                <div className="absolute inset-0 ring-2 ring-amber-500/60 ring-inset pointer-events-none" />
+              )}
             </motion.div>
           </div>
-          <div className="order-1 md:order-2">
+          <div className="order-1 md:order-2 pl-2">
             <h2 className="text-4xl font-bold text-white mb-8">Deep Management</h2>
             <div className="space-y-8">
               <div>
@@ -165,22 +255,51 @@ export default function BcmHome() {
       {/* ================= SCREENSHOTS ================= */}
       <section className="py-24 px-2 bg-slate-900 overflow-hidden">
         <h2 className="text-3xl font-bold text-center text-white mb-12">In-Game Interface</h2>
-        <div className="relative overflow-hidden">
-          <div className="flex gap-4 pb-8 animate-scroll">
-            {["/bcm1.png", "/bcm2.png", "/bcm3.png", "/bcm4.png", "/bcm1.png", "/bcm2.png", "/bcm3.png", "/bcm4.png","/bcm5.png"].map((src, i) => (
-              <div key={i} className="min-w-[300px] md:min-w-[400px] h-64 bg-slate-800 rounded-sm border border-slate-700 relative group overflow-hidden cursor-pointer flex-shrink-0">
-                <div className="absolute inset-0 bg-amber-500/0 group-hover:bg-amber-500/30 transition-all z-20 flex items-center justify-center pointer-events-none">
-                  <span className="text-white opacity-0 group-hover:opacity-100 font-bold tracking-widest drop-shadow-lg">VIEW</span>
+        <div className="relative">
+          {/* 좌측 화살표 */}
+          <button
+            className="absolute left-2 top-1/2 -translate-y-1/2 z-30 bg-slate-800/80 hover:bg-amber-500 border border-slate-700 hover:border-amber-500 text-white w-10 h-10 flex items-center justify-center rounded-full transition-all duration-200 shadow-lg"
+            onClick={() => handleArrow("left")}
+          >
+            ‹
+          </button>
+          {/* 우측 화살표 */}
+          <button
+            className="absolute right-2 top-1/2 -translate-y-1/2 z-30 bg-slate-800/80 hover:bg-amber-500 border border-slate-700 hover:border-amber-500 text-white w-10 h-10 flex items-center justify-center rounded-full transition-all duration-200 shadow-lg"
+            onClick={() => handleArrow("right")}
+          >
+            ›
+          </button>
+
+          {/* 스크롤 컨테이너 */}
+          <div className="overflow-hidden">
+            <div
+              ref={scrollRef}
+              className="flex gap-4 pb-8 will-change-transform"
+              style={{ width: "max-content" }}
+              onMouseEnter={() => { isPausedRef.current = true; }}
+              onMouseLeave={() => { isPausedRef.current = false; }}
+            >
+              {scrollImgs.map((src, i) => (
+                <div
+                  key={i}
+                  className="min-w-[380px] md:min-w-[480px] h-80 bg-slate-800 rounded-sm border border-slate-700 relative group overflow-hidden cursor-pointer flex-shrink-0"
+                  onClick={() => setLightboxSrc(src)}
+                >
+                  <div className="absolute inset-0 bg-amber-500/0 group-hover:bg-amber-500/20 transition-all z-20 flex items-center justify-center">
+                    <span className="text-white opacity-0 group-hover:opacity-100 font-bold tracking-widest drop-shadow-lg text-sm border border-white/50 px-4 py-2 transition-opacity duration-300">
+                      VIEW
+                    </span>
+                  </div>
+                  <Image
+                    src={src}
+                    alt={`BCM Screenshot ${(i % screenshots.length) + 1}`}
+                    fill
+                    className="object-cover opacity-75 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500 z-10"
+                  />
                 </div>
-                
-                <Image 
-                  src={src} 
-                  alt={`BCM Screenshot ${i + 1}`} 
-                  fill 
-                  className="object-cover opacity-70 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500 z-10" 
-                />
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </section>
