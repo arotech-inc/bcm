@@ -111,6 +111,7 @@ export default function BcmHome() {
 
       {/* ================= HERO ================= */}
       <section className="relative h-screen w-full flex items-center justify-center overflow-hidden border-b border-amber-900/30">
+        <Image src="/bcm_hero.jpg" alt="BCM Hero" fill className="absolute inset-0 object-cover opacity-20" priority />
         <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover opacity-40 mix-blend-luminosity">
           <source src="/bcm-hero.mp4" type="video/mp4" />
         </video>
@@ -358,7 +359,14 @@ export default function BcmHome() {
         <div className="max-w-6xl mx-auto">
           <div className="flex justify-between items-end mb-12">
             <h2 className="text-5xl font-bold text-white">Dev Blog</h2>
-            <Link href="/blog" className="text-amber-500 hover:text-amber-400 font-mono text-base">VIEW ALL →</Link>
+            <Link
+              href="/blog"
+              className="group relative inline-flex items-center gap-3 font-mono text-sm tracking-widest border border-amber-500/40 px-5 py-2.5 text-amber-500 hover:text-slate-950 hover:bg-amber-500 transition-all duration-300 shadow-[0_0_12px_rgba(245,158,11,0.15)] hover:shadow-[0_0_24px_rgba(245,158,11,0.4)] overflow-hidden"
+            >
+              <span className="absolute inset-0 bg-amber-500 translate-x-[-101%] group-hover:translate-x-0 transition-transform duration-300 ease-in-out" />
+              <span className="relative">VIEW ALL ARTICLES</span>
+              <span className="relative transition-transform duration-300 group-hover:translate-x-1">→</span>
+            </Link>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
             {bcmBlogData.slice(0, 3).map((post, i) => (

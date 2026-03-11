@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function BcmFooter() {
   return (
@@ -7,9 +8,7 @@ export default function BcmFooter() {
       <div className="max-w-7xl mx-auto relative z-10 grid md:grid-cols-4 gap-12">
         
         <div className="col-span-1 md:col-span-2">
-          <span className="text-2xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-amber-600 mb-4 block">
-            BCM
-          </span>
+          <Image src="/logo.png" alt="BCM Baseball Club Manager" width={140} height={36} className="object-contain mb-4" />
           <p className="text-slate-500 text-sm max-w-sm mb-6">
             The most authentic baseball front office simulation experience. Built for true baseball fans and data enthusiasts.
           </p>

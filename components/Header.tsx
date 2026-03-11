@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 
 const navLinks = [
   { name: "Overview", href: "#overview" },
@@ -18,14 +19,9 @@ export default function BcmHeader() {
     <header className="fixed top-0 left-0 right-0 z-50 bg-slate-950/90 border-b border-slate-800 backdrop-blur-md">
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
         
-        {/* 로고 (텍스트 또는 이미지) */}
-        <Link href="/" className="flex items-center gap-2">
-          <span className="text-3xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-amber-600">
-            BCM
-          </span>
-          <span className="hidden md:block text-xs text-slate-400 font-mono tracking-widest mt-2">
-            BASEBALL CLUB MANAGER
-          </span>
+        {/* 로고 */}
+        <Link href="/">
+          <Image src="/logo.png" alt="BCM Baseball Club Manager" width={160} height={40} className="object-contain" />
         </Link>
 
         {/* PC 네비게이션 */}
