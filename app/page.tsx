@@ -357,25 +357,20 @@ export default function BcmHome() {
       <section id="blog" className="py-24 px-6 bg-slate-950 border-t border-slate-800">
         <div className="max-w-6xl mx-auto">
           <div className="flex justify-between items-end mb-12">
-            {/* 4xl→5xl */}
             <h2 className="text-5xl font-bold text-white">Dev Blog</h2>
-            {/* sm→base */}
-            <button className="text-amber-500 hover:text-amber-400 font-mono text-base">VIEW ALL →</button>
+            <Link href="/blog" className="text-amber-500 hover:text-amber-400 font-mono text-base">VIEW ALL →</Link>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
-            {[
-              { date: "2026. 03. 02", title: "시뮬레이션 엔진 2.0 업데이트 노트", tag: "ENGINE" },
-              { date: "2026. 02. 18", title: "로스터 운용과 외국인 선수 규정 구현에 대하여", tag: "DESIGN" },
-              { date: "2026. 01. 25", title: "구장 3D 렌더링 시스템 프리뷰", tag: "ART" }
-            ].map((post, i) => (
-              <div key={i} className="bg-slate-900 border border-slate-800 p-6 hover:border-amber-500/30 transition-colors cursor-pointer group">
-                {/* xs→sm */}
+            {bcmBlogData.slice(0, 3).map((post, i) => (
+              <Link 
+                href={`/blog/${post.slug}`} 
+                key={i} 
+                className="bg-slate-900 border border-slate-800 p-6 hover:border-amber-500/30 transition-colors cursor-pointer group block"
+              >
                 <span className="text-sm font-mono text-slate-500 bg-slate-950 px-2 py-1 border border-slate-800">{post.tag}</span>
-                {/* lg→xl */}
                 <h4 className="text-xl font-bold text-white mt-4 mb-2 group-hover:text-amber-400">{post.title}</h4>
-                {/* sm→base */}
                 <p className="text-base font-mono text-slate-500">{post.date}</p>
-              </div>
+              </Link>
             ))}
           </div>
         </div>

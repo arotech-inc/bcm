@@ -5,7 +5,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
-import { bcmBlogData } from "../data/blogData"; // 데이터 불러오기
+import { bcmBlogData, BcmBlogPost } from "../data/blogData"; // 데이터 불러오기
 
 const allTags: BcmBlogPost['tag'][] = ['ENGINE', 'DESIGN', 'ART', 'SYSTEM', 'COMMUNITY'];
 
