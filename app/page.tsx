@@ -111,11 +111,11 @@ export default function BcmHome() {
 
       {/* ================= HERO ================= */}
       <section className="relative h-screen w-full flex items-center justify-center overflow-hidden border-b border-amber-900/30">
-        <Image src="/bcm_hero.jpg" alt="BCM Hero" fill className="absolute inset-0 object-cover opacity-50" priority />
+        <Image src="/bcm_hero.jpg" alt="BCM Hero" fill className="absolute inset-0 object-cover opacity-100" priority />
         <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover opacity-40 mix-blend-luminosity">
           <source src="/bcm-hero.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-slate-950/50" />
+        <div className="absolute inset-0 bg-slate-950/40" />
         <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-10" />
         <div className="relative z-10 text-center px-6 mt-16 max-w-5xl mx-auto">
           <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8 }}>
