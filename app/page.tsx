@@ -358,11 +358,11 @@ export default function BcmHome() {
         <div className="max-w-6xl mx-auto">
           <div className="flex justify-between items-end mb-12">
             <h2 className="text-5xl font-bold text-white">Dev Blog</h2>
-            <a href="/blog" className="text-amber-500 hover:text-amber-400 font-mono text-base">VIEW ALL →</a>
+            <Link href="/blog" className="text-amber-500 hover:text-amber-400 font-mono text-base">VIEW ALL →</Link>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
             {bcmBlogData.slice(0, 3).map((post, i) => (
-              <a 
+              <Link 
                 href={`/blog/${post.slug}`} 
                 key={i} 
                 className="bg-slate-900 border border-slate-800 p-6 hover:border-amber-500/30 transition-colors cursor-pointer group block"
@@ -370,7 +370,7 @@ export default function BcmHome() {
                 <span className="text-sm font-mono text-slate-500 bg-slate-950 px-2 py-1 border border-slate-800">{post.tag}</span>
                 <h4 className="text-xl font-bold text-white mt-4 mb-2 group-hover:text-amber-400">{post.title}</h4>
                 <p className="text-base font-mono text-slate-500">{post.date}</p>
-              </a>
+              </Link>
             ))}
           </div>
         </div>
