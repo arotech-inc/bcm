@@ -3,16 +3,15 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { useState } from "react";
-import { bcmBlogData, BcmBlogPost } from "../data/blogData"; // µ¥ÀÌÅÍ ºÒ·¯¿À±â
+import { bcmBlogData, BcmBlogPost } from "../data/blogData"; // ë°ì´í„° ë¶ˆëŸ¬ì˜¤ê¸°
 
 const allTags: BcmBlogPost['tag'][] = ['ENGINE', 'DESIGN', 'ART', 'SYSTEM', 'COMMUNITY'];
 
 export default function BcmBlogList() {
   const [selectedTag, setSelectedTag] = useState<BcmBlogPost['tag'] | 'ALL'>('ALL');
 
-  // ÅÂ±× ÇÊÅÍ¸µ ±â´É
+  // íƒœê·¸ í•„í„°ë§ ê¸°ëŠ¥
   const filteredData = selectedTag === 'ALL' 
     ? bcmBlogData 
     : bcmBlogData.filter(post => post.tag === selectedTag);
@@ -21,15 +20,15 @@ export default function BcmBlogList() {
     <main className="min-h-screen pt-40 pb-20 px-6 max-w-7xl mx-auto bg-slate-950 text-slate-300 selection:bg-amber-500 selection:text-slate-950 font-sans relative z-10">
       <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-[0.03] pointer-events-none" />
       
-      {/* ¸ñ·Ï Çì´õ */}
+      {/* ëª©ë¡ í—¤ë” */}
       <div className="border-l-4 border-amber-500 pl-6 mb-16 relative z-10 max-w-2xl">
         <h1 className="text-5xl md:text-6xl font-black text-white uppercase tracking-tighter mb-4">Dev Blog Archives</h1>
         <p className="text-lg text-slate-400 font-light leading-relaxed">
-          BCM °³¹ßÆÀÀÇ Ä¡¿­ÇÑ °í¹Î°ú ¿©Á¤. ÇÙ½É ½Ã¹Ä·¹ÀÌ¼Ç ¾Ë°í¸®ÁòºÎÅÍ ¾ÆÆ®¿öÅ© ÀÛ¾÷±îÁö, ¾ß±¸¿¡ ¹ÌÄ£ °³¹ßÀÚµéÀÇ ±â·ÏÀ» °øÀ¯ÇÕ´Ï´Ù.
+          BCM ê°œë°œíŒ€ì˜ ì¹˜ì—´í•œ ê³ ë¯¼ê³¼ ì—¬ì •. í•µì‹¬ ì‹œë®¬ë ˆì´ì…˜ ì•Œê³ ë¦¬ì¦˜ë¶€í„° ì•„íŠ¸ì›Œí¬ ì‘ì—…ê¹Œì§€, ì•¼êµ¬ì— ë¯¸ì¹œ ê°œë°œìë“¤ì˜ ê¸°ë¡ì„ ê³µìœ í•©ë‹ˆë‹¤.
         </p>
       </div>
 
-      {/* ? ÅÂ±× ÇÊÅÍ¸µ UI (µ¥ÀÌÅÍ ¬ï¬ã¬ä¬Ö¬ä¬Ú¬Ü¬Ñ Àû¿ë) */}
+      {/* ? íƒœê·¸ í•„í„°ë§ UI (ë°ì´í„° ÑÑÑ‚ĞµÑ‚Ğ¸ĞºĞ° ì ìš©) */}
       <div className="flex flex-wrap gap-3 mb-16 border border-slate-800 bg-slate-900/50 p-6 rounded-sm relative z-10">
         <button 
           onClick={() => setSelectedTag('ALL')}
@@ -48,10 +47,10 @@ export default function BcmBlogList() {
         ))}
       </div>
 
-      {/* ? °Ô½Ã±Û ¸ñ·Ï ±×¸®µå (´õ °¢Áø µ¥ÀÌÅÍ ©¡ Àû¿ë) */}
+      {/* ? ê²Œì‹œê¸€ ëª©ë¡ ê·¸ë¦¬ë“œ (ë” ê°ì§„ ë°ì´í„° Ã¦ ì ìš©) */}
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
         {filteredData.map((post, i) => (
-          <div key={i} className="bg-slate-900 border border-slate-800 p-7 hover:border-amber-500/50 transition-colors group shadow-lg flex flex-col justify-between">
+          <Link key={i} href={`/blog/${post.slug}`} className="bg-slate-900 border border-slate-800 p-7 hover:border-amber-500/50 transition-colors group shadow-lg flex flex-col justify-between">
             <div>
               <div className="flex justify-between items-center mb-5">
                 <span className="text-[11px] font-mono text-amber-500 bg-amber-950/70 px-2.5 py-1.5 border border-amber-900 tracking-widest uppercase">
@@ -69,15 +68,15 @@ export default function BcmBlogList() {
               </p>
             </div>
             <div className="border-t border-slate-800 pt-5">
-              <Link href={`/blog/${post.slug}`} className="font-mono text-xs text-amber-500 hover:text-amber-400 tracking-wider group flex items-center gap-2">
+              <span className="font-mono text-xs text-amber-500 group-hover:text-amber-400 tracking-wider flex items-center gap-2">
                 READ ARTICLE <span className="text-amber-700 transition-all group-hover:pl-1">==&gt;</span>
-              </Link>
+              </span>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
 
-      {/* µ¥ÀÌÅÍ°¡ ¾øÀ» ¶§ Ç¥½Ã */}
+      {/* ë°ì´í„°ê°€ ì—†ì„ ë•Œ í‘œì‹œ */}
       {filteredData.length === 0 && (
         <div className="border border-slate-800 p-16 text-center text-slate-600 font-mono relative z-10">
           -- NO ARTICLES FOUND IN THIS CATEGORY --

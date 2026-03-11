@@ -1,15 +1,15 @@
 import Link from "next/link";
 import Image from "next/image";
-import { bcmBlogData } from "../../data/blogData"; // µ¥ÀÌÅÍ ÆÄÀÏ °æ·Î¿¡ ¸Â°Ô È®ÀÎÇØÁÖ¼¼¿ä!
+import { bcmBlogData } from "../../data/blogData"; // ë°ì´í„° íŒŒì¼ ê²½ë¡œì— ë§ê²Œ í™•ì¸í•´ì£¼ì„¸ìš”!
 
-// ? Next.js 15¹öÀü ÃÖ½Å ±ÔÄ¢: params¸¦ Promise·Î ¹Ş½À´Ï´Ù.
+// ? Next.js 15ë²„ì „ ìµœì‹  ê·œì¹™: paramsë¥¼ Promiseë¡œ ë°›ìŠµë‹ˆë‹¤.
 export default async function BcmBlogDetail({ params }: { params: Promise<{ slug: string }> }) {
   
-  // ? ºñµ¿±â·Î params¸¦ Ç®¾î¼­ slug °ªÀ» ²¨³À´Ï´Ù.
+  // ? ë¹„ë™ê¸°ë¡œ paramsë¥¼ í’€ì–´ì„œ slug ê°’ì„ êº¼ëƒ…ë‹ˆë‹¤.
   const resolvedParams = await params;
   const post = bcmBlogData.find((n) => n.slug === resolvedParams.slug);
 
-  // ÀÏÄ¡ÇÏ´Â °Ô½Ã±ÛÀÌ ¾øÀ» ¶§ ¶ç¿öÁÙ È­¸é
+  // ì¼ì¹˜í•˜ëŠ” ê²Œì‹œê¸€ì´ ì—†ì„ ë•Œ ë„ì›Œì¤„ í™”ë©´
   if (!post) {
     return (
       <main className="min-h-screen bg-slate-950 pt-40 pb-20 px-6 flex flex-col items-center justify-center font-mono text-slate-500">
@@ -23,24 +23,24 @@ export default async function BcmBlogDetail({ params }: { params: Promise<{ slug
     );
   }
 
-  // Á¤»óÀûÀ¸·Î °Ô½Ã±ÛÀ» Ã£¾ÒÀ» ¶§ ·»´õ¸µµÉ È­¸é
+  // ì •ìƒì ìœ¼ë¡œ ê²Œì‹œê¸€ì„ ì°¾ì•˜ì„ ë•Œ ë Œë”ë§ë  í™”ë©´
   return (
     <main className="min-h-screen bg-slate-950 text-slate-300 pt-32 pb-20 px-6 font-sans relative z-10 selection:bg-amber-500 selection:text-slate-950">
-      {/* µ¥ÀÌÅÍ ´À³¦À» ÁÖ´Â ¹è°æ ±×¸®µå ÆĞÅÏ */}
+      {/* ë°ì´í„° ëŠë‚Œì„ ì£¼ëŠ” ë°°ê²½ ê·¸ë¦¬ë“œ íŒ¨í„´ */}
       <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-[0.03] pointer-events-none" />
       
       <article className="max-w-4xl mx-auto relative z-10">
         
-        {/* µÚ·Î°¡±â ¸µÅ© */}
+        {/* ë’¤ë¡œê°€ê¸° ë§í¬ */}
         <div className="mb-10 inline-block border border-slate-800 bg-slate-900/80 px-4 py-2 hover:border-amber-500/50 transition-colors shadow-lg">
           <Link href="/blog" className="text-amber-500 font-mono text-xs hover:text-amber-400 tracking-wider group flex items-center gap-2">
             <span className="text-amber-700 transition-all group-hover:-translate-x-1">&lt;==</span> BACK TO ARCHIVES
           </Link>
         </div>
 
-        {/* °Ô½Ã±Û Çì´õ (µ¥ÀÌÅÍ ©¡ Àû¿ë) */}
+        {/* ê²Œì‹œê¸€ í—¤ë” (ë°ì´í„° Ã¦ ì ìš©) */}
         <div className="mb-12 border border-slate-800 bg-slate-900 p-8 md:p-12 shadow-2xl relative overflow-hidden">
-          {/* »ó´Ü Àå½Ä ¼± */}
+          {/* ìƒë‹¨ ì¥ì‹ ì„  */}
           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-amber-600 to-transparent" />
           
           <div className="flex justify-between items-center mb-6 pb-6 border-b border-slate-800">
@@ -60,7 +60,7 @@ export default async function BcmBlogDetail({ params }: { params: Promise<{ slug
           </p>
         </div>
 
-        {/* BCM Æ¯È­ ¸ŞÀÎ ÀÌ¹ÌÁö ¿¬Ãâ (°¢Áø º¸´õ + Glow) */}
+        {/* BCM íŠ¹í™” ë©”ì¸ ì´ë¯¸ì§€ ì—°ì¶œ (ê°ì§„ ë³´ë” + Glow) */}
         <div className="mb-12 w-full relative aspect-video rounded-sm overflow-hidden border border-amber-900/30 shadow-[0_0_30px_rgba(245,158,11,0.05)] bg-slate-900">
           {post.image ? (
             <Image 
@@ -70,23 +70,23 @@ export default async function BcmBlogDetail({ params }: { params: Promise<{ slug
               className="object-cover opacity-80" 
             />
           ) : (
-            // ÀÌ¹ÌÁö°¡ ¾ÆÁ÷ ¾øÀ» ¶§¸¦ ´ëºñÇÑ Æû³ª´Â ÇÃ·¹ÀÌ½ºÈ¦´õ
+            // ì´ë¯¸ì§€ê°€ ì•„ì§ ì—†ì„ ë•Œë¥¼ ëŒ€ë¹„í•œ í¼ë‚˜ëŠ” í”Œë ˆì´ìŠ¤í™€ë”
             <div className="w-full h-full bg-slate-900 flex flex-col items-center justify-center font-mono text-slate-600 border border-slate-800 border-dashed">
-              <span className="animate-pulse text-amber-500/50 mb-2">¡Ü</span>
+              <span className="animate-pulse text-amber-500/50 mb-2">â—</span>
               NO IMAGE DATA
             </div>
           )}
         </div>
 
-        {/* Àü¹®ÀûÀÎ µ¥ÀÌÅÍ ©¡ ÆùÆ®¸ğ³ë/»ê½º »ó¼¼ ³»¿ë ·»´õ¸µ ¿µ¿ª */}
+        {/* ì „ë¬¸ì ì¸ ë°ì´í„° Ã¦ í°íŠ¸ëª¨ë…¸/ì‚°ìŠ¤ ìƒì„¸ ë‚´ìš© ë Œë”ë§ ì˜ì—­ */}
         <div className="leading-relaxed whitespace-pre-line text-slate-300 font-sans p-8 md:p-12 bg-slate-900 border border-slate-800 shadow-xl text-base md:text-lg">
           {post.content}
         </div>
 
-        {/* ÇÏ´Ü ³×ºñ°ÔÀÌ¼Ç ¹öÆ° */}
+        {/* í•˜ë‹¨ ë„¤ë¹„ê²Œì´ì…˜ ë²„íŠ¼ */}
         <div className="mt-16 pt-10 border-t border-slate-800 flex justify-center">
           <Link href="/blog" className="inline-flex items-center gap-3 px-10 py-4 font-bold font-mono tracking-widest border border-amber-500 text-amber-500 hover:bg-amber-500 hover:text-slate-950 transition-all shadow-[0_0_15px_rgba(245,158,11,0.2)] hover:shadow-[0_0_30px_rgba(245,158,11,0.4)]">
-            <span className="text-xl pb-1">¡ç</span> VIEW ALL ARCHIVES
+            <span className="text-xl pb-1">â†</span> VIEW ALL ARCHIVES
           </Link>
         </div>
         

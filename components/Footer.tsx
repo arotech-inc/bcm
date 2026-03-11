@@ -13,7 +13,7 @@ export default function BcmFooter() {
           <p className="text-slate-500 text-sm max-w-sm mb-6">
             The most authentic baseball front office simulation experience. Built for true baseball fans and data enthusiasts.
           </p>
-          <Link href="https://aerotech.co.kr" className="inline-block text-xs font-mono text-amber-500/70 hover:text-amber-400 border border-amber-500/30 px-4 py-2 rounded-sm">
+          <Link href="https://corporate-xi-six.vercel.app/" className="inline-block text-xs font-mono text-amber-500/70 hover:text-amber-400 border border-amber-500/30 px-4 py-2 rounded-sm">
             ← BACK TO AROTECH
           </Link>
         </div>
