@@ -1,8 +1,10 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { useState, useEffect, useRef, useCallback } from "react";
+import Link from "next/link";
+import { bcmBlogData } from "./data/blogData";
 
 export default function BcmHome() {
   const fadeUp = {
@@ -79,22 +81,33 @@ export default function BcmHome() {
     <main className="bg-slate-950 text-slate-300 min-h-screen selection:bg-amber-500 selection:text-slate-950">
 
       {/* ================= LIGHTBOX ================= */}
-      {lightboxSrc && (
-        <div
-          className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4"
-          onClick={() => setLightboxSrc(null)}
-        >
-          <button
-            className="absolute top-4 right-6 text-white text-3xl font-bold hover:text-amber-400 transition-colors"
+      <AnimatePresence>
+        {lightboxSrc && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4 cursor-zoom-out"
             onClick={() => setLightboxSrc(null)}
           >
-            ✕
-          </button>
-          <div className="relative max-w-5xl w-full max-h-[90vh] aspect-video" onClick={e => e.stopPropagation()}>
-            <Image src={lightboxSrc} alt="Preview" fill className="object-contain" />
-          </div>
-        </div>
-      )}
+            <button
+              className="absolute top-4 right-6 text-white text-3xl font-bold hover:text-amber-400 transition-colors z-[60]"
+              onClick={() => setLightboxSrc(null)}
+            >
+              ✕
+            </button>
+            <motion.div 
+              initial={{ scale: 0.95 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.95 }}
+              className="relative max-w-5xl w-full max-h-[90vh] aspect-video cursor-default" 
+              onClick={e => e.stopPropagation()}
+            >
+              <Image src={lightboxSrc} alt="Preview" fill className="object-contain" />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* ================= HERO ================= */}
       <section className="relative h-screen w-full flex items-center justify-center overflow-hidden border-b border-amber-900/30">
@@ -164,8 +177,21 @@ export default function BcmHome() {
           <div className="flex justify-between items-center mb-8 border-b border-slate-800 pb-4">
             {/* base→lg */}
             <span className="font-mono text-amber-500 text-lg">LIVE ENGINE STATUS</span>
-            {/* xs→sm */}
-            <span className="flex items-center gap-2 text-sm font-mono"><span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span> PROCESSING</span>
+            <span className="flex items-center gap-2 text-sm font-mono text-slate-500 uppercase">
+              <motion.span
+                animate={{ 
+                  opacity: [1, 0.3, 1],
+                  boxShadow: [
+                    "0 0 5px #4ade80, 0 0 10px #4ade80",
+                    "0 0 1px #4ade80, 0 0 2px #4ade80", 
+                    "0 0 5px #4ade80, 0 0 10px #4ade80"
+                  ] 
+                }}
+                transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                className="w-2.5 h-2.5 rounded-full bg-green-500 inline-block"
+              />
+              PROCESSING
+            </span>
           </div>
           {/* sm→base */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 font-mono text-base">
