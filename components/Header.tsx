@@ -31,9 +31,14 @@ export default function BcmHeader() {
               {link.name}
             </Link>
           ))}
-          <button className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-6 py-2 rounded-sm transition-all transform hover:scale-105 shadow-[0_0_15px_rgba(245,158,11,0.3)]">
+          <a
+            href="https://store.steampowered.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-6 py-2 rounded-sm transition-all transform hover:scale-105 shadow-[0_0_15px_rgba(245,158,11,0.3)] inline-block"
+          >
             WISHLIST
-          </button>
+          </a>
         </nav>
 
         {/* 모바일 햄버거 버튼 */}
