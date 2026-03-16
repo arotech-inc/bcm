@@ -20,6 +20,13 @@ export default function BcmBlogList() {
     <main className="min-h-screen pt-40 pb-20 px-6 max-w-7xl mx-auto bg-slate-950 text-slate-300 selection:bg-amber-500 selection:text-slate-950 font-sans relative z-10">
       <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-[0.03] pointer-events-none" />
       
+      {/* 홈으로 가기 */}
+      <div className="mb-10 inline-block border border-slate-800 bg-slate-900/80 px-4 py-2 hover:border-amber-500/50 transition-colors shadow-lg relative z-10">
+        <Link href="/" className="text-amber-500 font-mono text-xs hover:text-amber-400 tracking-wider group flex items-center gap-2">
+          <span className="text-amber-700 transition-all group-hover:-translate-x-1">&lt;==</span> BACK TO HOME
+        </Link>
+      </div>
+
       {/* 목록 헤더 */}
       <div className="border-l-4 border-amber-500 pl-6 mb-16 relative z-10 max-w-2xl">
         <h1 className="text-5xl md:text-6xl font-black text-white uppercase tracking-tighter mb-4">Dev Blog Archives</h1>
