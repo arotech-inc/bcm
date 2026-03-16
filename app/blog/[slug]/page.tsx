@@ -31,10 +31,10 @@ export default async function BcmBlogDetail({ params }: { params: Promise<{ slug
       
       <article className="max-w-4xl mx-auto relative z-10">
         
-        {/* 뒤로가기 링크 */}
+        {/* 홈으로 가기 링크 */}
         <div className="mb-10 inline-block border border-slate-800 bg-slate-900/80 px-4 py-2 hover:border-amber-500/50 transition-colors shadow-lg">
-          <Link href="/blog" className="text-amber-500 font-mono text-xs hover:text-amber-400 tracking-wider group flex items-center gap-2">
-            <span className="text-amber-700 transition-all group-hover:-translate-x-1">&lt;==</span> BACK TO ARCHIVES
+          <Link href="/" className="text-amber-500 font-mono text-xs hover:text-amber-400 tracking-wider group flex items-center gap-2">
+            <span className="text-amber-700 transition-all group-hover:-translate-x-1">&lt;==</span> BACK TO HOME
           </Link>
         </div>
 

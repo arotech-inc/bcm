@@ -12,7 +12,11 @@ export default function TermsOfServicePage() {
       <div className="max-w-4xl mx-auto">
         {/* 헤더 */}
         <div className="mb-16">
-          <Link href="/" className="text-amber-500 hover:text-amber-400 font-mono text-sm mb-6 inline-block">← BACK TO HOME</Link>
+          <div className="mb-6 inline-block border border-slate-800 bg-slate-900/80 px-4 py-2 hover:border-amber-500/50 transition-colors shadow-lg">
+            <Link href="/" className="text-amber-500 font-mono text-xs hover:text-amber-400 tracking-wider group flex items-center gap-2">
+              <span className="text-amber-700 transition-all group-hover:-translate-x-1">&lt;==</span> BACK TO HOME
+            </Link>
+          </div>
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Terms of Service</h1>
           <p className="text-slate-500 font-mono text-sm">Last Updated: March 1, 2026 &nbsp;|&nbsp; Effective: March 15, 2026</p>
         </div>
