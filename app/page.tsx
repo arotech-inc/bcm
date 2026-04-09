@@ -186,7 +186,7 @@ export default function BcmHome() {
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center">
           <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={fadeUp}>
             {/* 3xl→4xl / 5xl→6xl */}
-            <h2 className="text-4xl md:text-6xl font-bold text-white mb-6 border-l-4 border-amber-500 pl-4">The Ultimate<br />Front Office Experience</h2>
+            <h2 className="text-4xl md:text-6xl font-bold text-white mb-6 border-l-4 border-amber-500 pl-4 whitespace-nowrap">The Ultimate<br />Front Office Experience</h2>
             {/* lg→xl */}
             <p className="text-slate-400 leading-relaxed text-xl mb-6">
               단순히 선수를 기용하는 것을 넘어, 구단의 재정, 스카우팅, 데이터 분석 센터를 직접 운영해야 합니다. 당신의 철학이 곧 팀의 성적이 됩니다.
